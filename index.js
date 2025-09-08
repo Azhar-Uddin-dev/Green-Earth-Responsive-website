@@ -1,7 +1,8 @@
-const levelcontainer = document.getElementById("level-container");
+ const levelcontainer = document.getElementById("level-container");
 
 //load categories
 const plantcontainer = document.getElementById("plants-container");
+const bookMarksContainer = document.getElementById("yourCartContiner")
 
 const loadcategory = () => {
     fetch("https://openapi.programming-hero.com/api/categories")
@@ -19,10 +20,10 @@ const showPlantsCategories=(plants) => {
    plantcontainer.innerHTML =``; 
 plants.forEach(plant => {
     plantcontainer.innerHTML += `
-             <div class="p-4 w-50 bg-white rounded-lg shadow-md space-y-2 ">
+             <div class="p-4 w-50 bg-white rounded-lg shadow-md space-y-2 mx-auto ">
                   <img src="${plant.image}" alt="${plant.name}">
                   <h1 class="text-lg font-semibold">${plant.category}</h1>
-                  <p class="text-sm">${plant.description ? plant.description : 'No description available.'}</p>
+                  <p id="${plant.id}" class="text-sm">${plant.description ? plant.description : 'No description available.'}</p>
                   <div class="flex justify-between items-center">
                     <a class="btn bg-green-100 rounded-full mt-2">Fruit Tree</a>
                     <p>৳${plant.price}</p>
@@ -30,6 +31,7 @@ plants.forEach(plant => {
                   <button class="btn bg-green-500 rounded-full mt-2">Add to Cart</button>
                  </div>
     `;
+    
 });
 
 }
@@ -41,7 +43,7 @@ const showCategories = (categories) => {
     
     categories.forEach(cat => {
         levelcontainer.innerHTML += `
-          <div class="p-4 text-center text-bold w-[150px] rounded-lg shadow-md  ">
+          <div class="p-4 text-center text-bold w-full">
             <li id="${cat.id}" class="space-y-2 hover:bg-green-500">
                 ${cat.category_name}
             </li>
@@ -83,5 +85,33 @@ const plantsByCategory = (categoryId) => {
         });
 
 }
+let bookMarks = []
+ plantcontainer.addEventListener('click',(e)=>{
+        console.log(e.target)
+        console.log(e.target.innerText)
+hendleBookMark(e)
+ })
+     const hendleBookMark = (e)=>{
+    if(e.target.innerText ==='Add to Cart'){
+            const title=e.target.parentNode.children[2].innerText
+            const id = e.target.parentNode.id
+            console.log(id)
+            bookMarks.push({
+                title:title,
+                id:id
+            })
+            showMark(bookMarks)
+        }
+     
+     }
+     const showMark =(bookMarks)=>{
+bookMarks.forEach(bookMarks =>{
+    bookMarksContainer.innerHTML +=`
+    <div>
+    <h1>${bookMark.title}</h1>
+    </div>
+    `
+})
+     }
 loadcategory();
 plantsByCategory(1);

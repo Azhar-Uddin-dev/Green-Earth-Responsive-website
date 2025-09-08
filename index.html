@@ -73,28 +73,97 @@
         
       </section>
       <!-- card section -->
-       <section class="bg-[#f0fdf4]  flex flex-col md:grid md:grid-cols-3 lg:grid-cols-3 gap-4 p-10">
+       <section class="bg-[#f0fdf4]  grid flex-col md:grid-cols-3 lg:grid-cols-3 gap-4 p-10">
         
-            <div class=" ">
+            <div class="w-full ">
             
-                <h1 class="text-xl font-semibold mb-4">Categories</h1>
+            <h1 class="text-2xl font-bold text-center">Categories</h1>    
                 <ul id="level-container" >
 
                 </ul>
             </div>
           
        <div>
-           <h1 class="text-xl font-semibold  text-center">Choose Your Trees</h1>
-            <div id="plants-container" class=" flex flex-row-1 md:flex-row-2 lg:flex-row-3 flex-wrap gap-4 border border-black     ">
+           <h1 class="text-2xl font-bold  text-center">Choose Your Trees</h1>
+            <div id="plants-container" class=" flex flex-cols-1 lg:flex-cols-3 flex-wrap gap-4 border border-black w-full mx-auto   ">
        </div>
             
 
             </div>
-            <div class="gap-4 border border-black w-52  ">
-              <h1>History</h1>
+            
+            <div class="gap-4 border border-black  shadow-2xl bg-white mt-7  ">
+              
+                              <h1 class="text-2xl font-bold text-center mt-3 ">Your Cart</h1>
+
+              <div id="yourCartContiner">
+
+              </div>
             </div>
        
        </section>
+
+
+
+       <!-- About the Campaign -->
+        <section class="w-[1090] bg-[#f0fdf4]">
+          <h1 class="text-center font-semibold text-2xl">About the Campaign</h1>
+          <div class="grid grid-cols-1 lg:grid-cols-2 mx-auto  container mx-auto gap-7 mt-10 w-[10]">
+            <!-- img -->
+            <div > 
+              <img class="mb-5 mx-auto" src="assets/about.png" alt="">
+            </div>
+            <!-- title -->
+            <div class="w-[528px] my-auto  ">
+              <p class="">Green Earth is a global tree plantation initiative dedicated to fighting climate change. Since our  start, we’ve planted over 500,000 trees worldwide. By joining our campaign, you help restore forests, create habitats for wildlife, and combat global warming.</p>
+              <ul class="pt-6">
+                <li><span class="font-bold">.</span> Restoration of natural habitats</li>
+                <li><span class="font-bold">.</span> Improvement of air quality</li>
+                <li><span class="font-bold">.</span> Support for local communities</li>
+              </ul>
+            </div>
+          </div>
+          
+        </section>
+        <section class="bg-[#cff0dc]">
+        <div>
+            <h1 class="text-center font-semibold text-2xl p-6 ">Our Impact</h1>
+        </div>
+        <div class="grid lg:grid-cols-3 grid-cols-1 flex align-item-cantar  container mx-auto gap-25 mt-15 pb-15 h">
+          <div class="w-[516px] mx-auto h-[156px] border border-black bg-white rounded-lg shadow-md my-auto hover:bg-gray-100 ">
+            <h1 class="text-center font-bold text-2xl text-green-600 pt-10">500K+</h1>
+            <p class="text-center p-6">Trees Planted</p>
+          </div>
+          <div class="w-[516px] mx-auto h-[156px] border border-black bg-white rounded-lg shadow-md my-auto hover:bg-gray-100">
+            <h1 class="text-center font-bold text-2xl text-green-600 pt-10">500K+</h1>
+            <p class="text-center p-6">Trees Planted</p>
+          </div>
+          <div class="w-[516px] mx-auto h-[156px] border border-black bg-white rounded-lg shadow-md my-auto hover:bg-gray-100">
+            <h1 class="text-center font-bold text-2xl text-green-600 pt-10">500K+</h1>
+            <p class="text-center p-6">Trees Planted</p>
+          </div>
+        </div>
+        </section>
+        <!-- from section -->
+         <section class="bg-[#166534] pb-15">
+          <div>
+            <h1 class="text-2xl text-center text-white font-semibold pt-15 mx-auto">Plant a Tree Today</h1>
+          </div>
+        <div class="bg-[#15803D] lg:w-[650px]  text-center mx-auto p-10 rounded-lg mt-8 mx-auto ">
+            <form class=" ">
+            <input type="text" placeholder="Your Name" class="input w-full mx-auto" /><br><br>
+            <input type="email" placeholder="Your Email Address" class="input w-full mx-auto" /><br><br>
+            <select class="select w-full mx-auto">
+  <option disabled selected>Number of Trees</option>
+  <option>Robi</option>
+  <option> Banglalink </option>
+  <option> Grameen-gp</option>
+</select>
+          </form>
+        </div>
+         </section>
+         <footer class="text-center bg-[#14532d] p-7 text-white">
+          <p>© 2025 Green Earth. All Rights Reserved.</p>
+         </footer>
    
     
     <script src="index.js"></script>

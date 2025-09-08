@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Total & History Demo</title>
+  <script defer>
+    let total = 0;
+    const historyLog = {};
+
+    function addNumber(title, spanId) {
+      if (!confirm("আপনি কি যোগ করতে চান?")) {
+        return; // cancel চাপলে কিছু হবে না
+      }
+
+      // number পড়া
+      let numberEl = document.getElementById(spanId);
+      let num = parseInt(numberEl.innerText);
+
+      // total এ যোগ করা
+      total += num;
+      document.getElementById("total").innerText = total;
+
+      // history update
+      if (!historyLog[title]) {
+        historyLog[title] = 0;
+      }
+      historyLog[title] += num;
+
+      // history দেখানো
+      let historyDiv = document.getElementById("history");
+      historyDiv.innerHTML = "";
+      for (let key in historyLog) {
+        historyDiv.innerHTML += `<p>${key} → মোট যোগ হয়েছে = ${historyLog[key]}</p>`;
+      }
+    }
+  </script>
+</head>
+<body class="p-4">
+
+  <h2>Plants</h2>
+
+  <div>
+    <h3>Apple</h3>
+    <span id="num1">10</span>
+    <button onclick="addNumber('Apple', 'num1')">Add</button>
+  </div>
+
+  <div>
+    <h3>Mango</h3>
+    <span id="num2">20</span>
+    <button onclick="addNumber('Mango', 'num2')">Add</button>
+  </div>
+
+  <div>
+    <h3>Banana</h3>
+    <span id="num3">15</span>
+    <button onclick="addNumber('Banana', 'num3')">Add</button>
+  </div>
+
+  <div>
+    <h3>Orange</h3>
+    <span id="num4">25</span>
+    <button onclick="addNumber('Orange', 'num4')">Add</button>
+  </div>
+
+  <div>
+    <h3>Pineapple</h3>
+    <span id="num5">30</span>
+    <button onclick="addNumber('Pineapple', 'num5')">Add</button>
+  </div>
+
+  <hr>
+  <h2>Total: <span id="total">0</span></h2>
+  <h3>History:</h3>
+  <div id="history"></div>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Total & History from JSON</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer>
+    let total = 0;
+    const historyLog = {};
+
+    // JSON থেকে ডেটা লোড করা
+    async function loadData() {
+      try {
+        const res = await fetch("data.json"); // আপনার ফাইলের নাম
+        const plants = await res.json();
+        showPlants(plants);
+      } catch (error) {
+        console.error("Error loading data:", error);
+      }
+    }
+
+    // Plant Card গুলো দেখানো
+    function showPlants(plants) {
+      const container = document.getElementById("plant-container");
+      container.innerHTML = "";
+
+      plants.forEach((plant, index) => {
+        container.innerHTML += `
+          <div class="p-4 bg-white rounded-xl shadow-lg">
+            <h3 class="text-lg font-semibold">${plant.title}</h3>
+            <span id="num${index}" class="text-gray-600">${plant.value}</span>
+            <button onclick="addNumber('${plant.title}', 'num${index}')" 
+              class="mt-2 px-4 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600">
+              Add
+            </button>
+          </div>
+        `;
+      });
+    }
+
+    // Add button ক্লিক করলে হিসাব করা
+    function addNumber(title, spanId) {
+      if (!confirm("আপনি কি যোগ করতে চান?")) return;
+
+      let numberEl = document.getElementById(spanId);
+      let num = parseInt(numberEl.innerText);
+
+      total += num;
+      document.getElementById("total").innerText = total;
+
+      if (!historyLog[title]) {
+        historyLog[title] = 0;
+      }
+      historyLog[title] += num;
+
+      let historyDiv = document.getElementById("history");
+      historyDiv.innerHTML = "";
+      for (let key in historyLog) {
+        historyDiv.innerHTML += `
+          <div class="p-2 bg-gray-100 rounded-lg shadow mb-2">
+            <p class="text-sm font-medium">${key} → 
+              <span class="font-bold text-green-600">${historyLog[key]}</span>
+            </p>
+          </div>`;
+      }
+    }
+
+    // প্রথমে ডেটা লোড হবে
+    window.onload = loadData;
+  </script>
+</head>
+<body class="p-6 bg-gray-50">
+
+  <h2 class="text-2xl font-bold mb-4 text-center">🌱 Plant Shop</h2>
+
+  <!-- Cards Container -->
+  <div id="plant-container" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <!-- JSON থেকে ডেটা আসবে -->
+  </div>
+
+  <!-- Total & History -->
+  <div class="mt-6 p-4 bg-white rounded-xl shadow-lg">
+    <h2 class="text-xl font-bold">Total: <span id="total">0</span></h2>
+    <h3 class="mt-4 text-lg font-semibold">History:</h3>
+    <div id="history" class="mt-2"></div>
+  </div>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Earth</title>
+    <link rel="stylesheet" href="style.css">
+        <!-- font awesome cdn -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+     <!-- font integration -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<!-- daisyui cdn -->
+
+      <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="open-sans">
+    <!-- navebar -->
+     <section>
+        <div class="navbar bg-base-100 shadow-sm bg-[#15803D] text-white ">
+  <div class="navbar-start">
+    <div class="dropdown">
+      <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
+      </div>
+      <ul
+        tabindex="0"
+        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+        
+          <ul class="p-2 bg-[#15803D]">
+            
+            <li><a>About</a></li>
+            <li><a>Gallery</a></li>
+            <li><a>Plant a Tree</a></li>
+          </ul>
+        </li>
+        
+      </ul>
+    </div>
+    <a class="btn btn-ghost text-xl "> <img class="w-5 " src="assets/about.png" alt="">Green Earth</a>
+  </div>
+  <div class="navbar-center hidden lg:flex">
+    <ul class="menu menu-horizontal px-1">
+      <li><a>About</a></li>
+      <li>
+        <details>
+          <summary>Parent</summary>
+          <ul class="p-2  bg-[#15803D]" >
+            <li><a>About</a></li>
+            <li><a>Gallery</a></li>
+            <li><a></a>Plant a Tree</li>
+          </ul>
+        </details>
+      </li>
+      <li><a>Plant a Tree</a></li>
+    </ul>
+  </div>
+  <div class="navbar-end">
+    <a class="btn bg-yellow-500 rounded-full">Plant a Tree</a>
+  </div>
+</div>
+     </section>
+     <!-- navebar title -->
+      <section class="">
+        <div class="text-center  px-10 bg-[#cff0dc] py-20 space-y-4 bg-[url('assets/hero-leaf2.png')] bg-left bg-no-repeat bg-right">
+            <h1 class="text-3xl font-bold">Plant a Tree, Grow a Future</h1>
+            <p class="text-sm font-sm">Join our mission to plant 1 million trees and make the Earth greener for future
+                 generations.</p>
+                 <a class="btn bg-yellow-500 rounded-full">Plant a Tree</a>
+        </div>
+        
+      </section>
+      <!-- card section -->
+       <section class="bg-[#f0fdf4]  flex flex-col md:grid md:grid-cols-3 lg:grid-cols-3 gap-4 p-10">
+        
+            <div class=" ">
+            
+            <h1 class="text-2xl font-bold text-center">Categories</h1>    
+                <ul id="level-container" >
+
+                </ul>
+            </div>
+          
+       <div>
+           <h1 class="text-2xl font-bold  text-center">Choose Your Trees</h1>
+            <div id="plants-container" class=" flex flex-cols-1 md:flex-row-1 lg:flex-row-3 flex-wrap gap-4 border border-black w-full    ">
+       </div>
+            
+
+            </div>
+            
+            <div class="gap-4 border border-black w-full shadow-2xl bg-white mt-7 ">
+              
+                              <h1 class="text-2xl font-bold text-center mt-3 ">Your Cart</h1>
+
+              <div id="yourCartContiner">
+
+              </div>
+            </div>
+       
+       </section>
+       <script>
+        const levelcontainer = document.getElementById("level-container");
+
+//load categories
+const plantcontainer = document.getElementById("plants-container");
+const bookMarksContainer = document.getElementById("yourCartContiner")
+
+const loadcategory = () => {
+    fetch("https://openapi.programming-hero.com/api/categories")
+        .then(res => res.json())
+        .then((data) => {
+            const categories = data.categories;
+            showCategories(categories);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};
+//show categories
+const showPlantsCategories=(plants) => {
+   plantcontainer.innerHTML =``; 
+plants.forEach(plant => {
+    plantcontainer.innerHTML += `
+             <div class="p-4 w-50 bg-white rounded-lg shadow-md space-y-2 mx-auto ">
+                  <img src="${plant.image}" alt="${plant.name}">
+                  <h1 class="text-lg font-semibold">${plant.category}</h1>
+                  <p id="${plant.id}" class="text-sm">${plant.description ? plant.description : 'No description available.'}</p>
+                  <div class="flex justify-between items-center">
+                    <a class="btn bg-green-100 rounded-full mt-2">Fruit Tree</a>
+                    <p>৳${plant.price}</p>
+                  </div>
+                  <button class="btn bg-green-500 rounded-full mt-2">Add to Cart</button>
+                 </div>
+    `;
+    
+});
+
+}
+
+const showCategories = (categories) => {
+    
+    levelcontainer.innerHTML = "";
+
+    
+    categories.forEach(cat => {
+        levelcontainer.innerHTML += `
+          <div class="p-4 text-center text-bold w-full">
+            <li id="${cat.id}" class="space-y-2 hover:bg-green-500">
+                ${cat.category_name}
+            </li>
+          </div>
+
+        `;
+    });
+};
+
+
+levelcontainer.addEventListener("click", (e) => {
+    if (e.target.tagName === "LI") {
+        
+        levelcontainer.querySelectorAll("li").forEach(li => {
+            li.classList.remove("bg-green-500");
+        });
+
+       
+        e.target.classList.add("bg-green-500");
+
+        //console.log("Selected:", e.target.id);
+        plantsByCategory(e.target.id);
+    }
+});
+
+
+//plants by category
+const plantsByCategory = (categoryId) => {
+    console.log(categoryId);
+    fetch(`https://openapi.programming-hero.com/api/category/${categoryId}`)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data.plants);
+            showPlantsCategories(data.plants);
+            })
+        .catch(error =>{ 
+            console.log(error)
+
+        });
+
+}
+let bookMarks = []
+ plantcontainer.addEventListener('click',(e)=>{
+        console.log(e.target)
+        console.log(e.target.innerText)
+hendleBookMark(e)
+ })
+     const hendleBookMark = (e)=>{
+    if(e.target.innerText ==='Add to Cart'){
+            const title=e.target.parentNode.children[2].innerText
+            const id = e.target.parentNode.id
+            console.log(id)
+            bookMarks.push({
+                title:title,
+                id:id
+            })
+            showMark(bookMarks)
+        }
+     
+     }
+     const showMark =(bookMarks)=>{
+bookMarks.forEach(bookMarks =>{
+    bookMarksContainer.innerHTML +=`
+    <div>
+    <h1>${bookMark.title}</h1>
+    </div>
+    `
+})
+     }
+loadcategory();
+plantsByCategory(1);
+
+       </script>
+   
+    
+    <script src="index.js"></script>
+</body>
+</html>
