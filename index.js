@@ -108,7 +108,7 @@ const displayPlantDetail=(plants)=>{
         
       </div>
       <div class="py-5">
-      <img class="py-5 h-20" src="${plants.image}" alt="">
+      <img class="py-5 h-[450px] w-[400px] mx-auto" src="${plants.image}" alt="">
         <h1 class="text-2xl font-bold py-5">${plants.name}</h1>
         <p>${plants.description} </p>
         <p class="btn bg-green-100 rounded-full mt-2 py-">${plants.category}</p>
